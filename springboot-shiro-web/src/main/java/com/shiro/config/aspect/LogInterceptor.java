@@ -52,15 +52,10 @@ private final static Logger logger = LoggerFactory.getLogger(LogInterceptor.clas
 
     //环绕通知,环绕增强，相当于MethodInterceptor
     @Around("webLog()")
-    public Object arround(ProceedingJoinPoint pjp) {
-        logger.info("方法环绕start.....");
-        try {
+    public Object arround(ProceedingJoinPoint pjp) throws Throwable {
+            logger.info("方法环绕start.....");
             Object o = pjp.proceed();
             logger.info("方法环绕proceed，结果是 :" + o);
             return o;
-        } catch (Throwable e) {
-            logger.error(e.getMessage());
-            return null;
-        }
     }
 }

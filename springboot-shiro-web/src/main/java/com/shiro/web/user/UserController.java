@@ -1,5 +1,6 @@
 package com.shiro.web.user;
 
+import com.shiro.config.config.BaseController;
 import com.shiro.entity.user.User;
 import com.shiro.service.user.UserService;
 import io.swagger.annotations.Api;
@@ -16,7 +17,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/user")
 @Api
-public class UserController {
+public class UserController extends BaseController{
 
 
     @Autowired
