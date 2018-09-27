@@ -1,4 +1,4 @@
-package com.shiro.dao.config;
+package com.shiro.config.config;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

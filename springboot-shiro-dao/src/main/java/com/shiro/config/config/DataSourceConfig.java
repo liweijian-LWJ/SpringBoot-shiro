@@ -1,4 +1,4 @@
-package com.shiro.dao.config;
+package com.shiro.config.config;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;

@@ -1,4 +1,4 @@
-package com.shiro.dao.annotation;
+package com.shiro.config.annotation;
 
 
 import java.lang.annotation.ElementType;

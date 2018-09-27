@@ -1,4 +1,4 @@
-package com.shiro.dao.config;
+package com.shiro.config.config;
 
 
 public class DataSourceContextHoler {

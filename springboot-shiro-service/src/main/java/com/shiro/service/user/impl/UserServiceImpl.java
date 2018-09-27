@@ -1,6 +1,6 @@
 package com.shiro.service.user.impl;
 
-import com.shiro.dao.annotation.CurrentDataSource;
+import com.shiro.config.annotation.CurrentDataSource;
 import com.shiro.dao.user.UserMapper;
 import com.shiro.entity.user.User;
 import com.shiro.service.user.UserService;

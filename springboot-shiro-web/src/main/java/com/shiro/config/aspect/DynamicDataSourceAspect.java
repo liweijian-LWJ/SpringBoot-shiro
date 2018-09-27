@@ -1,9 +1,9 @@
-package com.shiro.web.aspect;
+package com.shiro.config.aspect;
 
 
 
-import com.shiro.dao.annotation.CurrentDataSource;
-import com.shiro.dao.config.DataSourceContextHoler;
+import com.shiro.config.annotation.CurrentDataSource;
+import com.shiro.config.config.DataSourceContextHoler;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;

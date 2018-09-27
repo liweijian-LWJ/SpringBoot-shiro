@@ -1,4 +1,4 @@
-package com.shiro.web.aspect;
+package com.shiro.config.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;

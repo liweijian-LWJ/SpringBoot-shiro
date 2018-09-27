@@ -1,4 +1,4 @@
-package com.shiro.web.config;
+package com.shiro.config.config;
 
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;

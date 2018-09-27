@@ -1,4 +1,4 @@
-package com.shiro.web.config;
+package com.shiro.config.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
