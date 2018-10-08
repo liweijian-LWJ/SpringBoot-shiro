@@ -92,8 +92,14 @@
     u.*
     FROM
     user u
-    WHERE
-    u.id = #{id}
+    <where>
+      <if test="id != null">
+       AND u.id = #{id}
+      </if>
+      <if test="userName != null">
+        AND u.userName=#{userName}
+      </if>
+    </where>
   </select>
   <select id="selectRole" parameterType="String" resultType="com.shiro.entity.login.Role">
      SELECT
