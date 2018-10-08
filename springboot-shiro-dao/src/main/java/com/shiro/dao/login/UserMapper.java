@@ -2,11 +2,16 @@ package com.shiro.dao.login;
 
 import com.shiro.entity.login.User;
 
-import java.util.List;
-
 public interface UserMapper {
+    int deleteByPrimaryKey(String id);
 
-    List<User> selectUser(User user);
+    int insert(User record);
 
-    void insertUser(User user);
+    int insertSelective(User record);
+
+    User selectByPrimaryKey(String id);
+
+    int updateByPrimaryKeySelective(User record);
+
+    int updateByPrimaryKey(User record);
 }

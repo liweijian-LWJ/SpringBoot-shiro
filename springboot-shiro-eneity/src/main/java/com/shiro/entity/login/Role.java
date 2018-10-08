@@ -8,19 +8,21 @@ import lombok.ToString;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @Auther: liweijian
+ * @Date: 2018/10/8 10:39
+ * @Description:
+ */
 @Data
-@ToString
 @Getter
 @Setter
-public class User implements Serializable{
+@ToString
+public class Role implements Serializable{
 
     private String id;
 
-    private String userName;
+    private String roleName;
 
-    private String userPwd;
+    private List<Permission> listPermission;
 
-    private String salt;
-
-    private List<Role> listRole;
 }
