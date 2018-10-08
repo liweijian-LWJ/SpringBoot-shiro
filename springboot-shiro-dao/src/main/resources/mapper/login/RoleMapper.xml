@@ -3,7 +3,12 @@
 <mapper namespace="com.shiro.dao.login.RoleMapper">
   <resultMap id="BaseResultMap" type="com.shiro.entity.login.Role">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="roleName" jdbcType="VARCHAR" property="rolename" />
+    <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+  </resultMap>
+  <resultMap id="rolePermission" type="com.shiro.entity.login.Role">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+    <collection property="listPermission" column="id" select="selectPermission" ofType="com.shiro.entity.login.Permission"></collection>
   </resultMap>
   <sql id="Base_Column_List">
     id, roleName
@@ -20,7 +25,7 @@
   </delete>
   <insert id="insert" parameterType="com.shiro.entity.login.Role">
     insert into role (id, roleName)
-    values (#{id,jdbcType=VARCHAR}, #{rolename,jdbcType=VARCHAR})
+    values (#{id,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shiro.entity.login.Role">
     insert into role
@@ -28,7 +33,7 @@
       <if test="id != null">
         id,
       </if>
-      <if test="rolename != null">
+      <if test="roleName != null">
         roleName,
       </if>
     </trim>
@@ -36,23 +41,43 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="rolename != null">
-        #{rolename,jdbcType=VARCHAR},
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.shiro.entity.login.Role">
     update role
     <set>
-      <if test="rolename != null">
-        roleName = #{rolename,jdbcType=VARCHAR},
+      <if test="roleName != null">
+        roleName = #{roleName,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.shiro.entity.login.Role">
     update role
-    set roleName = #{rolename,jdbcType=VARCHAR}
+    set roleName = #{roleName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="select" parameterType="list" resultMap="rolePermission">
+     SELECT
+          *
+      FROM
+          role
+      WHERE
+          id IN (
+            <foreach collection="listRole" item="item" index="index" separator=",">
+              #{item.id}
+            </foreach>
+          )
+  </select>
+  <select id="selectPermission" parameterType="String" resultType="com.shiro.entity.login.Permission">
+    SELECT
+    p.*
+    FROM
+    role_permission rp
+    LEFT JOIN permission p ON rp.permissionId = p.id
+    WHERE rp.roleId = #{id}
+  </select>
 </mapper>

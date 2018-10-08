@@ -3,7 +3,7 @@
 <mapper namespace="com.shiro.dao.login.PermissionMapper">
   <resultMap id="BaseResultMap" type="com.shiro.entity.login.Permission">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="permissionName" jdbcType="VARCHAR" property="permissionname" />
+    <result column="permissionName" jdbcType="VARCHAR" property="permissionName" />
   </resultMap>
   <sql id="Base_Column_List">
     id, permissionName
@@ -20,7 +20,7 @@
   </delete>
   <insert id="insert" parameterType="com.shiro.entity.login.Permission">
     insert into permission (id, permissionName)
-    values (#{id,jdbcType=VARCHAR}, #{permissionname,jdbcType=VARCHAR})
+    values (#{id,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shiro.entity.login.Permission">
     insert into permission
@@ -28,7 +28,7 @@
       <if test="id != null">
         id,
       </if>
-      <if test="permissionname != null">
+      <if test="permissionName != null">
         permissionName,
       </if>
     </trim>
@@ -36,23 +36,36 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="permissionname != null">
-        #{permissionname,jdbcType=VARCHAR},
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.shiro.entity.login.Permission">
     update permission
     <set>
-      <if test="permissionname != null">
-        permissionName = #{permissionname,jdbcType=VARCHAR},
+      <if test="permissionName != null">
+        permissionName = #{permissionName,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.shiro.entity.login.Permission">
     update permission
-    set permissionName = #{permissionname,jdbcType=VARCHAR}
+    set permissionName = #{permissionName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="select" parameterType="list" resultMap="BaseResultMap">
+      SELECT
+          p.*
+      FROM
+          role_permission rp
+      LEFT JOIN permission p ON rp.permissionId = p.id
+      WHERE rp.roleId IN
+      (
+      <foreach collection="listRole" index="index" item="item" separator=",">
+        #{item.id}
+      </foreach>
+      )
+  </select>
 </mapper>

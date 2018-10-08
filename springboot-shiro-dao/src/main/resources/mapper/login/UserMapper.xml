@@ -3,9 +3,17 @@
 <mapper namespace="com.shiro.dao.login.UserMapper">
   <resultMap id="BaseResultMap" type="com.shiro.entity.login.User">
     <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="userName" jdbcType="VARCHAR" property="username" />
-    <result column="userPwd" jdbcType="VARCHAR" property="userpwd" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="userPwd" jdbcType="VARCHAR" property="userPwd" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
+  </resultMap>
+  <resultMap id="userRoleMap" type="com.shiro.entity.login.User">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="userPwd" jdbcType="VARCHAR" property="userPwd" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <collection property="listRole" column="id" select="selectRole" ofType="com.shiro.entity.login.Role">
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
     id, userName, userPwd, salt
@@ -23,7 +31,7 @@
   <insert id="insert" parameterType="com.shiro.entity.login.User">
     insert into user (id, userName, userPwd, 
       salt)
-    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{userpwd,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
       #{salt,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.shiro.entity.login.User">
@@ -32,10 +40,10 @@
       <if test="id != null">
         id,
       </if>
-      <if test="username != null">
+      <if test="userName != null">
         userName,
       </if>
-      <if test="userpwd != null">
+      <if test="userPwd != null">
         userPwd,
       </if>
       <if test="salt != null">
@@ -46,11 +54,11 @@
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="userpwd != null">
-        #{userpwd,jdbcType=VARCHAR},
+      <if test="userPwd != null">
+        #{userPwd,jdbcType=VARCHAR},
       </if>
       <if test="salt != null">
         #{salt,jdbcType=VARCHAR},
@@ -60,11 +68,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.shiro.entity.login.User">
     update user
     <set>
-      <if test="username != null">
-        userName = #{username,jdbcType=VARCHAR},
+      <if test="userName != null">
+        userName = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="userpwd != null">
-        userPwd = #{userpwd,jdbcType=VARCHAR},
+      <if test="userPwd != null">
+        userPwd = #{userPwd,jdbcType=VARCHAR},
       </if>
       <if test="salt != null">
         salt = #{salt,jdbcType=VARCHAR},
@@ -74,9 +82,26 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.shiro.entity.login.User">
     update user
-    set userName = #{username,jdbcType=VARCHAR},
-      userPwd = #{userpwd,jdbcType=VARCHAR},
+    set userName = #{userName,jdbcType=VARCHAR},
+      userPwd = #{userPwd,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <select id="select" parameterType="com.shiro.entity.login.User" resultMap="userRoleMap">
+    SELECT
+    u.*
+    FROM
+    user u
+    WHERE
+    u.id = #{id}
+  </select>
+  <select id="selectRole" parameterType="String" resultType="com.shiro.entity.login.Role">
+     SELECT
+          r.*
+      FROM
+          user_role ur
+      LEFT JOIN role r ON ur.roleId = r.id
+      WHERE
+          ur.userId = #{id}
+  </select>
 </mapper>

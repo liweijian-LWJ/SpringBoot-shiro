@@ -5,9 +5,11 @@ import com.shiro.config.config.BaseController;
 import com.shiro.config.config.ResEnum;
 import com.shiro.config.config.ResponseData;
 import com.shiro.service.mongo.MongoService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,8 +26,9 @@ public class MongoController extends BaseController{
     @Autowired
     MongoService mongoService;
 
-    @RequestMapping(value = "/insertMongo")
+    @PostMapping(value = "/insertMongo")
     @ResponseBody
+    @ApiOperation(value = "新增mongo测试")
     public ResponseData insert(@RequestBody JSONObject jsonObject){
         if(ObjectUtils.isEmpty(jsonObject)){
             return  new ResponseData(ResEnum.FAIL.getCode(),"parameter error");
