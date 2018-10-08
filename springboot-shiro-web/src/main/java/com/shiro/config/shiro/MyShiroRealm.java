@@ -28,7 +28,7 @@ public class MyShiroRealm extends AuthorizingRealm{
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        String userName = authenticationToken.getPrincipal().toString();
+        String userName = (String)authenticationToken.getPrincipal();
         User reqUser = new User();
         reqUser.setUserName(userName);
         User user = userService.select(reqUser);

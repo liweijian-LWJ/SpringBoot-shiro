@@ -1,5 +1,6 @@
 package com.shiro.web.login;
 
+import ch.qos.logback.classic.Logger;
 import com.alibaba.fastjson.JSONObject;
 import com.shiro.config.config.BaseController;
 import com.shiro.entity.login.User;
@@ -13,6 +14,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,30 +25,29 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @Api(description = "登录")
-public class LoginController {
+public class LoginController extends  BaseController{
 
     @Autowired
     UserService userService;
 
-    @GetMapping(value = "/login")
-    public void select() {
+    @RequestMapping(value = "/login")
+    public String select(String userName,String userPwd) {
+        if(StringUtils.isEmpty(userName)){
+            return "/login";
+        }
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken("admin", "123");
+        UsernamePasswordToken token = new UsernamePasswordToken(userName, userPwd);
         try {
             subject.login(token);
         } catch (AuthenticationException e) {
             token.clear();
-            e.printStackTrace();
+            logger.error("error================");
         }
+        return "/login";
     }
 
     @RequestMapping(value = "/index")
     public void index() {
         System.out.println("登录成功");
-    }
-
-    @RequestMapping(value = "/")
-    public ModelAndView login() {
-        return new ModelAndView("/login");
     }
 }
