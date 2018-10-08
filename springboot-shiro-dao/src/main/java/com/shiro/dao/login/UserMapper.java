@@ -1,6 +1,6 @@
-package com.shiro.dao.user;
+package com.shiro.dao.login;
 
-import com.shiro.entity.user.User;
+import com.shiro.entity.login.User;
 
 import java.util.List;
 

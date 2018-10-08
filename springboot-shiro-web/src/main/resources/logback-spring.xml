@@ -24,7 +24,7 @@
         <appender-ref ref="consoleLog1"/>
         <!--<appender-ref ref="consoleLog2"/>-->
     </root>
-    <logger name="com.shiro.dao.user" level="debug" additivity="false">
+    <logger name="com.shiro.dao.login" level="debug" additivity="false">
         <appender-ref ref="consoleLog1"/>
     </logger>
 

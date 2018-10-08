@@ -1,8 +1,8 @@
-package com.shiro.web.user;
+package com.shiro.web.login;
 
 import com.shiro.config.config.BaseController;
-import com.shiro.entity.user.User;
-import com.shiro.service.user.UserService;
+import com.shiro.entity.login.User;
+import com.shiro.service.login.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

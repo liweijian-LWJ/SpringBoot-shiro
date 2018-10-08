@@ -1,4 +1,4 @@
-package com.shiro.entity.user;
+package com.shiro.entity.login;
 
 import lombok.Data;
 import lombok.Getter;

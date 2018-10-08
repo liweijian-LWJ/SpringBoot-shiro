@@ -1,6 +1,6 @@
-package com.shiro.service.user;
+package com.shiro.service.login;
 
-import com.shiro.entity.user.User;
+import com.shiro.entity.login.User;
 
 import java.util.List;
 

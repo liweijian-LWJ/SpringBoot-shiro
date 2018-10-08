@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shiro.dao.user.UserMapper">
-  <resultMap id="BaseResultMap" type="com.shiro.entity.user.User">
+<mapper namespace="com.shiro.dao.login.UserMapper">
+  <resultMap id="BaseResultMap" type="com.shiro.entity.login.User">
     <id column="userId" jdbcType="VARCHAR" property="userId" />
     <result column="userName" jdbcType="VARCHAR" property="userName" />
   </resultMap>
@@ -66,7 +66,7 @@
   <sql id="Base_Column_List">
     userId, userName
   </sql>
-<select id="selectUser" parameterType="com.shiro.entity.user.User" resultMap="BaseResultMap">
+<select id="selectUser" parameterType="com.shiro.entity.login.User" resultMap="BaseResultMap">
       SELECT  <include refid="Base_Column_List"/> FROM  user
       <where>
         <if test="userId != null and userId != '' ">
@@ -77,7 +77,7 @@
         </if>
       </where>
 </select>
-  <insert id="insertUser" parameterType="com.shiro.entity.user.User">
+  <insert id="insertUser" parameterType="com.shiro.entity.login.User">
       INSERT  INTO user ( userId, userName) VALUES (#{userId},#{userName})
   </insert>
 </mapper>
