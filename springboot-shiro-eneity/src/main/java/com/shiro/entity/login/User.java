@@ -23,4 +23,8 @@ public class User implements Serializable{
     private String salt;
 
     private List<Role> listRole;
+
+    public String getCredentialsSalt(){
+        return  this.userName+this.getSalt();
+    }
 }

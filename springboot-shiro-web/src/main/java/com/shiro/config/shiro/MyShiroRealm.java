@@ -29,11 +29,12 @@ public class MyShiroRealm extends AuthorizingRealm{
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         String userName = (String)authenticationToken.getPrincipal();
+        System.out.println(authenticationToken.getCredentials());
         User reqUser = new User();
         reqUser.setUserName(userName);
         User user = userService.select(reqUser);
         if(!ObjectUtils.isEmpty(user)){
-            return  new SimpleAuthenticationInfo(user,user.getUserPwd(),user.getUserName());
+            return  new SimpleAuthenticationInfo(user,user.getUserPwd(),getName());
         }
         return null;
     }

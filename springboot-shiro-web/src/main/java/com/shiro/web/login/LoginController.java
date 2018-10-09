@@ -1,22 +1,18 @@
 package com.shiro.web.login;
 
-import ch.qos.logback.classic.Logger;
-import com.alibaba.fastjson.JSONObject;
+
 import com.shiro.config.config.BaseController;
-import com.shiro.entity.login.User;
 import com.shiro.service.login.UserService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.subject.Subject;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @Auther: liweijian
@@ -25,29 +21,42 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @Api(description = "登录")
-public class LoginController extends  BaseController{
+public class LoginController extends BaseController {
 
     @Autowired
     UserService userService;
 
     @RequestMapping(value = "/login")
-    public String select(String userName,String userPwd) {
-        if(StringUtils.isEmpty(userName)){
-            return "/login";
+    public ModelAndView login(HttpServletRequest request, Map<String,Object> map) {
+        // 登录失败从request中获取shiro处理的异常信息。
+        // shiroLoginFailure:就是shiro异常类的全类名.
+        String exception = (String) request.getAttribute("shiroLoginFailure");
+        logger.info("exception=" + exception);
+        String msg = "";
+        if (exception != null) {
+            if (UnknownAccountException.class.getName().equals(exception)) {
+                logger.info("UnknownAccountException -- > 账号不存在：");
+                msg = "UnknownAccountException -- > 账号不存在：";
+            } else if (IncorrectCredentialsException.class.getName().equals(exception)) {
+                logger.info("IncorrectCredentialsException -- > 密码不正确：");
+                msg = "IncorrectCredentialsException -- > 密码不正确：";
+            } else if ("kaptchaValidateFailed".equals(exception)) {
+                logger.info("kaptchaValidateFailed -- > 验证码错误");
+                msg = "kaptchaValidateFailed -- > 验证码错误";
+            } else {
+                msg = "else >> "+exception;
+                logger.info("else -- >" + exception);
+            }
         }
-        Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken token = new UsernamePasswordToken(userName, userPwd);
-        try {
-            subject.login(token);
-        } catch (AuthenticationException e) {
-            token.clear();
-            logger.error("error================");
-        }
-        return "/login";
+        // 此方法不处理登录成功,由shiro进行处理
+        ModelAndView  modelAndView= new ModelAndView("/login");
+        modelAndView.addObject("msg",msg);
+        return modelAndView;
     }
 
-    @RequestMapping(value = "/index")
-    public void index() {
-        System.out.println("登录成功");
+    @RequestMapping(value = {"/","/index"})
+    public ModelAndView index() {
+        logger.info("登录成功");
+        return new ModelAndView("/page/index");
     }
 }
